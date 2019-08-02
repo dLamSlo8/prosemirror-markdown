@@ -200,6 +200,7 @@ export class MarkdownParser {
     this.schema = schema
     this.tokenizer = tokenizer
     this.tokenHandlers = tokenHandlers(schema, tokens)
+    console.log("parser constructed!");
   }
 
   // :: (string) → Node
@@ -207,9 +208,13 @@ export class MarkdownParser {
   // and create a ProseMirror document as prescribed by this parser's
   // rules.
   parse(text) {
+    console.log("parsing...");
+    console.log(this.tokenizer.parse(text, {}));
     let state = new MarkdownParseState(this.schema, this.tokenHandlers), doc
     state.parseTokens(this.tokenizer.parse(text, {}))
     do { doc = state.closeNode() } while (state.stack.length)
+      
+
     return doc
   }
 }
